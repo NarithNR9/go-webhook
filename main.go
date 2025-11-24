@@ -14,7 +14,7 @@ func main() {
 	r := gin.Default()
 
 	// Register the webhook handler
-	r.POST("/webhook", webhook.Handler)
+	r.POST("/go/webhook", webhook.Handler)
 
 	// Determine port for HTTP service.
 	port := os.Getenv("PORT")
