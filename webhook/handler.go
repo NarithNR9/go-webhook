@@ -55,7 +55,13 @@ func Handler(c *gin.Context) {
 
 	// 5. Log the event (Business Logic)
 	log.Printf("Received UQPay Event: Type=%s, Name=%s, ID=%s", event.EventType, event.EventName, event.EventID)
-	log.Printf("Event Data: %+v", event.Data)
+	eventDataJSON, err := json.Marshal(event.Data)
+	if err != nil {
+		log.Printf("Failed to marshal event data to JSON: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process event data"})
+		return
+	}
+	log.Printf("Event Data: %s", eventDataJSON)
 
 	// 6. Return 200 OK
 	c.String(http.StatusOK, "OK")
